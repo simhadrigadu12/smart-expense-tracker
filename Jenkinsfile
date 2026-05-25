@@ -9,7 +9,7 @@ pipeline {
             steps {
 
                 git branch: 'main',
-                url: https://github.com/simhadrigadu12/smart-expense-tracker.git
+                url: 'https://github.com/simhadrigadu12/smart-expense-tracker.git'
 
             }
         }

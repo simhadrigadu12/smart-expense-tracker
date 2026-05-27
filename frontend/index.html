@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Smart Expense Tracker</title>
 
@@ -11,21 +15,50 @@
 
 <body>
 
-<div class="container">
+    <div class="overlay">
 
-    <h1>Daily Expense Tracker</h1>
+        <div class="container">
 
-    <input type="text" id="title" placeholder="Expense Title">
+            <h1>💰 Smart Expense Tracker</h1>
 
-    <input type="number" id="amount" placeholder="Expense Amount">
+            <p class="subtitle">
+                Manage your daily expenses efficiently
+            </p>
 
-    <button onclick="addExpense()">Add Expense</button>
+            <div class="summary">
 
-    <ul id="expense-list"></ul>
+                <div class="card">
+                    <h2>Total Expenses</h2>
+                    <p id="total">₹0</p>
+                </div>
 
-</div>
+            </div>
 
-<script src="script.js"></script>
+            <div class="form-container">
+
+                <input type="text" id="title" placeholder="Enter Expense Title">
+
+                <input type="number" id="amount" placeholder="Enter Amount">
+
+                <button onclick="addExpense()">
+                    Add Expense
+                </button>
+
+            </div>
+
+            <div class="expense-section">
+
+                <h2>Expense History</h2>
+
+                <ul id="expense-list"></ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 

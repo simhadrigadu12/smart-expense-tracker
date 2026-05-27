@@ -1,29 +1,41 @@
-async function addExpense(){
+let totalExpense = 0;
+
+async function addExpense() {
 
     let title = document.getElementById("title").value;
 
     let amount = document.getElementById("amount").value;
 
-    await fetch('http://localhost:5000/expenses',{
+    if(title === "" || amount === ""){
 
-        method:'POST',
+        alert("Please fill all fields");
 
-        headers:{
-            'Content-Type':'application/json'
+        return;
+    }
+
+    await fetch('http://localhost:5000/expenses', {
+
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json'
         },
 
-        body:JSON.stringify({
+        body: JSON.stringify({
             title,
             amount
         })
 
     });
 
-    loadExpenses();
+    document.getElementById("title").value = "";
 
+    document.getElementById("amount").value = "";
+
+    loadExpenses();
 }
 
-async function loadExpenses(){
+async function loadExpenses() {
 
     let response = await fetch('http://localhost:5000/expenses');
 
@@ -33,16 +45,56 @@ async function loadExpenses(){
 
     list.innerHTML = "";
 
-    data.forEach(expense=>{
+    totalExpense = 0;
+
+    data.forEach((expense,index) => {
+
+        totalExpense += Number(expense.amount);
 
         let li = document.createElement("li");
 
-        li.innerHTML = expense.title + " - ₹" + expense.amount;
+        li.innerHTML = `
+        
+        <span>
+        ${expense.title} - ₹${expense.amount}
+        </span>
+
+        <button class="delete-btn"
+        onclick="deleteExpense(${index})">
+        Delete
+        </button>
+        
+        `;
 
         list.appendChild(li);
 
     });
 
+    document.getElementById("total").innerText =
+    "₹" + totalExpense;
+}
+
+async function deleteExpense(index){
+
+    let response = await fetch('http://localhost:5000/expenses');
+
+    let data = await response.json();
+
+    data.splice(index,1);
+
+    await fetch('http://localhost:5000/reset',{
+
+        method:'POST',
+
+        headers:{
+            'Content-Type':'application/json'
+        },
+
+        body:JSON.stringify(data)
+
+    });
+
+    loadExpenses();
 }
 
 loadExpenses();
